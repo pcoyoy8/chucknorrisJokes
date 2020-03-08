@@ -9,7 +9,7 @@ use GuzzleHttp;
 class jokeController extends Controller
 {
     protected $url = 'https://api.chucknorris.io/jokes/random';
-    protected $jokesNumber = 3;
+    protected $jokesNumber = 10;
 
     protected function getJoke()
     {
@@ -29,17 +29,23 @@ class jokeController extends Controller
     public function index()
     {
         $jokes = [];
-        while (count($jokes) < $this->jokesNumber) {
+        $favorites = Joke::all();
+
+        $requiredJokes = $this->jokesNumber - $favorites->count();
+        while (count($jokes) < $requiredJokes) {
             $joke = $this->getJoke();
-            if(!array_key_exists($joke->id, $jokes)) {
+            if(!array_key_exists($joke->id, $jokes)
+            && !array_key_exists($joke->id, $favorites)) {
                 array_push($jokes, [
                     'id' => $joke->id,
                     'value' => $joke->value,
                 ]);
             }
         }
+
         return view('home')
-            ->with('jokes', $jokes);
+            ->with('jokes', $jokes)
+            ->with('favorites', $favorites);
     }
 
     /**

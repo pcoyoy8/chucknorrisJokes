@@ -37,6 +37,9 @@
                     <div class="form-group">
                         <label for="favorites" class="display-4">Favorite jokes</label>
                         <select class="form-control" id="favorites" name="favorites" size="5" multiple>
+                            @foreach($favorites as $joke)
+                                <option value="{!! $joke->key !!}">{!! $joke->value !!}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
