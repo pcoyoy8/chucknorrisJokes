@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Joke;
 use Illuminate\Http\Request;
 use GuzzleHttp;
 
 class jokeController extends Controller
 {
     protected $url = 'https://api.chucknorris.io/jokes/random';
+    protected $jokesNumber = 3;
+
     protected function getJoke()
     {
         $client = new GuzzleHttp\Client();
@@ -26,7 +29,7 @@ class jokeController extends Controller
     public function index()
     {
         $jokes = [];
-        while (count($jokes) < 10) {
+        while (count($jokes) < $this->jokesNumber) {
             $joke = $this->getJoke();
             if(!array_key_exists($joke->id, $jokes)) {
                 array_push($jokes, [
@@ -40,68 +43,31 @@ class jokeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
-        //
-    }
+        $items = $request->items;
+        $keys = array_column($items, 'key');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $otherJokes = Joke::whereNotIn('key', $keys)
+            ->delete();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        foreach ($items as $item) {
+            $exist = Joke::where('key', '=', $item['key'])->get();
+            if ($exist->count() == 0) {
+               $new = new Joke();
+               $new->key = $item['key'];
+               $new->value = $item['value'];
+               $new->save();
+            }
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json([
+            'message' => 'Saved',
+        ]);
     }
 }

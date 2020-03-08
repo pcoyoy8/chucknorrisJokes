@@ -18,3 +18,4 @@ Route::get('/', function () {
 });
 
 Route::get('/', 'jokeController@index')->name('joke');
+Route::post('/store', 'jokeController@store')->name('store');
