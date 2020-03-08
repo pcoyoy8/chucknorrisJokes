@@ -1,3 +1,7 @@
+$(document).ready(() => {
+  $('#success-alert').hide();
+});
+
 $('#add').click(() => {
   const options = $('#jokes option:selected');
 

@@ -47,7 +47,7 @@
 {{--            Save button--}}
             <div class="row mb-3">
                 <div class="col-md-12 text-center">
-                    <button class="btn btn-primary ml-3" id="save" name="save">Save</button>
+                    <button class="btn btn-primary mb-3" id="save" name="save">Save</button>
                 </div>
             </div>
         </div>

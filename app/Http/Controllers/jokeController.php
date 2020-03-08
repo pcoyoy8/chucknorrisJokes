@@ -50,11 +50,13 @@ class jokeController extends Controller
      */
     public function store(Request $request)
     {
-        $items = $request->items;
-        $keys = array_column($items, 'key');
+        $items = ($request && $request->items) ? $request->items : [];
 
-        $otherJokes = Joke::whereNotIn('key', $keys)
-            ->delete();
+        if (count($items) > 0) {
+            $keys = array_column($items, 'key');
+            $otherJokes = Joke::whereNotIn('key', $keys)
+                ->delete();
+        }
 
         foreach ($items as $item) {
             $exist = Joke::where('key', '=', $item['key'])->get();
