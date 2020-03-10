@@ -37,11 +37,15 @@ $('#save').click(() => {
       items: data,
     },
     success: (response) => {
-      console.log(response);
+      $('#title').addClass('alert-success');
+      $('#message').text(response.message);
+      $('#modalInfo').modal();
     },
     error(jqXHR, textStatus, errorThrown) {
-      console.log(JSON.stringify(jqXHR));
-      console.log(`AJAX error: ${textStatus} : ${errorThrown}`);
+      $('#title').addClass('alert-danger');
+      const error = `(${jqXHR.status}) ${textStatus}: ${errorThrown}`;
+      $('#message').text(error);
+      $('#modalInfo').modal();
     },
   });
 });

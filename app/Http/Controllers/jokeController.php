@@ -75,7 +75,7 @@ class jokeController extends Controller
         }
 
         return response()->json([
-            'message' => 'Saved',
+            'message' => 'Records saved.',
         ]);
     }
 }
