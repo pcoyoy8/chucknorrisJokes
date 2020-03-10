@@ -60,8 +60,10 @@ class jokeController extends Controller
 
         if (count($items) > 0) {
             $keys = array_column($items, 'key');
-            $otherJokes = Joke::whereNotIn('key', $keys)
+            Joke::whereNotIn('key', $keys)
                 ->delete();
+        } else {
+            Joke::query()->delete();
         }
 
         foreach ($items as $item) {

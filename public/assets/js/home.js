@@ -37,15 +37,21 @@ $('#save').click(() => {
       items: data,
     },
     success: (response) => {
+      $('#title').removeClass('alert-danger');
       $('#title').addClass('alert-success');
       $('#message').text(response.message);
       $('#modalInfo').modal();
     },
     error(jqXHR, textStatus, errorThrown) {
+      $('#title').removeClass('alert-success');
       $('#title').addClass('alert-danger');
       const error = `(${jqXHR.status}) ${textStatus}: ${errorThrown}`;
       $('#message').text(error);
       $('#modalInfo').modal();
     },
   });
+});
+
+$('#reset').click(() => {
+    location.reload();
 });

@@ -14,6 +14,11 @@
                 <div class="m-4">
                     <button class="btn btn-primary" id="save" name="save">Save</button>
                 </div>
+
+{{--                Reset page--}}
+                <div class="m-4">
+                    <button class="btn btn-light" id="reset" name="reset" type="reset">Try again</button>
+                </div>
             </div>
         </div>
         <div class="col-md-10">
