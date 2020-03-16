@@ -20,19 +20,23 @@
     php artisan migrate
     ````
    
-#Notes
-You must to create your own `virtualhost`, set the DocumentRoot (example):
-    ````
-    DocumentRoot /var/www/html/jokes/public/
-    ````
-and provide the following permissions:
-    ````
-    <Directory PROJECT_LOCATION>
-        Options Indexes FollowSymLinks MultiViews
-        AllowOverride All
-        Require all granted
-    </Directory>
-    ````
+# Notes
+You must to create your own `virtualhost`, set the DocumentRoot (example)
+
+````
+DocumentRoot /var/www/html/jokes/public/
+````
+
+and provide the following permissions
+
+````
+<Directory PROJECT_LOCATION>
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride All
+    Require all granted
+</Directory>
+````
 
 The `mod_rewrite` should be enabled.
+
 Reference: https://www.digitalocean.com/community/tutorials/how-to-rewrite-urls-with-mod_rewrite-for-apache-on-ubuntu-18-04
