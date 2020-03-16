@@ -66,8 +66,12 @@ class jokeController extends Controller
             Joke::query()->delete();
         }
 
+        error_log('jhere');
+        $existingJokes = Joke::all();
+        error_log($existingJokes);
         foreach ($items as $item) {
-            $exist = Joke::where('key', '=', $item['key'])->get();
+            $exist = $existingJokes
+                ->where('key', '=', $item['key']);
             if ($exist->count() == 0) {
                $new = new Joke();
                $new->key = $item['key'];
